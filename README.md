@@ -88,7 +88,7 @@ Voici le résultat affiché lorsque le nœud 984 crash :
 
 ![image](https://user-images.githubusercontent.com/93133836/228972990-a095e575-a5e7-421e-a577-91df485bc32f.png)
 
-Les nœuds 951 et 64 ont bien remarqué que leur voisin, le nœud 984 est mort :biblethump:
+Les nœuds 951 et 64 ont bien remarqué que leur voisin, le nœud 984 est mort :cry:
 
 # Difficultés rencontrées
 

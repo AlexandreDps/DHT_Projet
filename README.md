@@ -35,7 +35,7 @@ On voit que c'est le nœud 984 qui a quitté la plateforme (zone rouge) et que s
 ## Étape 2 : Routing (Send and Deliver)
 
 Maintenant que les nœuds ont été construits, ils peuvent s’envoyer des messages.  
-Pour ce faire, nous avons créés une classe _Message_ contenant le nœud expéditeur, le nœud destinataire et le contenu du message. Nous avons ensuite ajouté les méthodes _new_message_ et _send_message_ à la classe _Node_ permettant de créer et d’envoyer un message.  
+Pour ce faire, nous avons créé une classe _Message_ contenant le nœud expéditeur, le nœud destinataire et le contenu du message. Nous avons ensuite ajouté les méthodes _new_message_ et _send_message_ à la classe _Node_ permettant de créer et d’envoyer un message.  
 Par exemple, disons que le nœud 355 veut envoyer le message « salut » au nœud 182 :
 
 <img src="https://user-images.githubusercontent.com/93133836/228915077-c82ae4f9-8a79-498d-b408-b76fe24acfc2.png" width="400" height="100">

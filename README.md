@@ -32,6 +32,14 @@ Enfin, lorsque l'on supprime un nœud, on obtient la DHT suivante :
 
 On voit que c'est le nœud 984 qui a quitté la plateforme (zone rouge) et que ses anciens voisins ont bien été mis en relation.
 
+En effet, lorsqu’un nœud quitte la plateforme, ses voisins doivent le remarquer.  
+Pour cela, on a une méthode _check_alive_ qui permet à chaque nœud de vérifier toutes les 5 secondes si ses voisins sont encore présents grâce à l’attribut _is_alive_ de chaque nœud et en utilisant des threads.  
+Voici le résultat affiché lorsque le nœud 984 a quitté la plateforme :
+
+![image](https://user-images.githubusercontent.com/93133836/228972990-a095e575-a5e7-421e-a577-91df485bc32f.png)
+
+Les nœuds 951 et 64 ont bien remarqué que leur voisin, le nœud 984 avait quitté la DHT.
+
 ## Étape 2 : Routing (Send and Deliver)
 
 Maintenant que les nœuds ont été construits, ils peuvent s’envoyer des messages.  
@@ -57,6 +65,21 @@ d2 = Data(dht=dht1, contenu='Test2')
 ```
 Résultat obtenu :
 
-<img src="https://user-images.githubusercontent.com/93133836/228916073-b25b5464-6f4c-4726-9561-4f26d5ec3d42.png" width="600" height="50">
+<img src="https://user-images.githubusercontent.com/93133836/228916073-b25b5464-6f4c-4726-9561-4f26d5ec3d42.png" width="650" height="40">
 
 On voit qu’une donnée a été créée avec l’identifiant 922 et a été correctement associée au nœud le plus proche qui est le nœud 908. On peut faire le même constat pour la donnée d’identifiant 492.
+
+## Étape 4 : Advanced routing
+
+Nous devons maintenant chercher une méthode de routage plus performante.  
+Notre méthode se base sur la construction d’une table de routage pour chaque nœud.  
+Lorsqu’un chemin est parcouru, on ajoute des infos dans le message pour que la donnée reste en mémoire de chacun des nœuds et les nœuds ayant participé au transfert du message peuvent faire des liens longs directement.
+
+Voici un exemple :
+
+![image](https://user-images.githubusercontent.com/93133836/228974321-450d0f3e-d891-45b7-997d-cef4f6d81237.png)
+
+![image](https://user-images.githubusercontent.com/93133836/228974366-52c3de1f-d40e-4104-a14c-6c062442b0dc.png)
+
+Avant que le nœud 984 ne quitte la plateforme, il a d'abord envoyé un message au nœud 679 et le nœud 951 a partcipé au transfert de ce message.  
+Puis, lors de l'envoi d'un nouveau message au nœud 355, un lien long a été trouvé entre le nœud 984 et le nœud 951 car encore une fois le nœud 951 participe au transfert du nouveau message.

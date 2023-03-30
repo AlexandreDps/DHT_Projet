@@ -7,8 +7,12 @@ Le but de ce projet est de réaliser et implémenter une DHT.
 
 # Mode d'emploi
 
+Développé en python avec Spyder :
+
 Pour lancer la construction et la simulation de la DHT, il suffit d'exécuter le fichier _dht.py_  
-Le fichier _graphic.py_ contient le code permettant de traçer l'anneau représentant la DHT
+Le fichier _graphic.py_ contient le code permettant de traçer l'anneau représentant la DHT (que nous avons construit grace aux coordonnées polaires, 2pi/nombre de noeuds)
+
+Pour lancer la simulation, il suffit d'executer le fichier simulation.py
 
 # Construction de la DHT
 

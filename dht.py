@@ -13,7 +13,6 @@ from threading import Thread
 import time
 from matplotlib import pyplot as plt
 
-DEGRE_REPLICATION = 3
 TIMING_CHECK_IF_ALIVE = 5 #secondes
 RUN_WITH_THREAD = True #Active ou désactive le check alive
 
@@ -65,18 +64,15 @@ class Node():
             self.table_routage.update(path) #Evite les doublons
             nextnode.send_message(message,path)
     def get_data(self,data):
-        #Quand un noeud reçoit de la data, il la transmet à ses 3voisins de droite et gauche les + proches
+        #Quand un noeud reçoit de la data, il la transmet à ses voisins de droite et gauche immédiats
         self.data_storage.append(data)
         ng = self.v_gauche
         nd = self.v_droite
-        for i in range(DEGRE_REPLICATION-1):
-            ng.data_storage.append(data)
-            nd.data_storage.append(data)
-            ng = ng.v_gauche
-            nd = nd.v_droite
+        ng.data_storage.append(data)
+        nd.data_storage.append(data)
     def check_alive(self):
         while self.is_alive: #La thread meurt en meme temps que le noeud
-            #Check si ses voisins sont encore en vie toutes les 5secondes
+            #Check si ses voisins sont encore en vie toutes les 5 secondes
             time.sleep(TIMING_CHECK_IF_ALIVE)
             if self.v_droite.is_alive == False :
                 print(f'[*] {self.identifiant} à remarqué que son voisin {self.v_droite.identifiant} était mort. Il fera le necessaire.\n')
@@ -109,7 +105,7 @@ class Data():
         while abs(self.identifiant - next_node(sens,compared_node).identifiant) < abs(self.identifiant-compared_node.identifiant):
             compared_node = next_node(sens,compared_node)
         compared_node.get_data(self)
-        print(f"[+] La donnée {self.identifiant} à été transmise au noeud {compared_node.identifiant} et ses {DEGRE_REPLICATION} voisins de droite et gauche les plus proches")
+        print(f"[+] La donnée {self.identifiant} à été transmise au noeud {compared_node.identifiant} et ses voisins de droite et de gauche immédiats")
     
     
     

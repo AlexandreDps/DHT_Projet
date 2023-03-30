@@ -32,14 +32,6 @@ Enfin, lorsque l'on supprime un nœud, on obtient la DHT suivante :
 
 On voit que c'est le nœud 984 qui a quitté la plateforme (zone rouge) et que ses anciens voisins ont bien été mis en relation.
 
-En effet, lorsqu’un nœud quitte la plateforme, ses voisins doivent le remarquer.  
-Pour cela, on a une méthode _check_alive_ qui permet à chaque nœud de vérifier toutes les 5 secondes si ses voisins sont encore présents grâce à l’attribut _is_alive_ de chaque nœud et en utilisant des threads.  
-Voici le résultat affiché lorsque le nœud 984 a quitté la plateforme :
-
-![image](https://user-images.githubusercontent.com/93133836/228972990-a095e575-a5e7-421e-a577-91df485bc32f.png)
-
-Les nœuds 951 et 64 ont bien remarqué que leur voisin, le nœud 984 avait quitté la DHT.
-
 ## Étape 2 : Routing (Send and Deliver)
 
 Maintenant que les nœuds ont été construits, ils peuvent s’envoyer des messages.  
@@ -83,3 +75,23 @@ Voici un exemple :
 
 Avant que le nœud 984 ne quitte la plateforme, il a d'abord envoyé un message au nœud 679 et le nœud 951 a partcipé au transfert de ce message.  
 Puis, lors de l'envoi d'un nouveau message au nœud 355, un lien long a été trouvé entre le nœud 984 et le nœud 951 car encore une fois le nœud 951 participe au transfert du nouveau message.
+
+## Pour aller plus loin
+
+Vient alors la question de la dynamicité.
+
+En effet, il faut maintenir un routage correct lorsqu’un nœud quitte la plateforme ou lorsqu'il crash. Ses voisins doivent le remarquer.  
+Pour cela, on a une méthode _check_alive_ qui permet à chaque nœud de vérifier toutes les 5 secondes si ses voisins sont encore présents grâce à l’attribut _is_alive_ de chaque nœud.  
+On crée alors un thread en même temps qu'un noeud qui va faire appel à la méthode _check_alive_.
+
+Voici le résultat affiché lorsque le nœud 984 crash :
+
+![image](https://user-images.githubusercontent.com/93133836/228972990-a095e575-a5e7-421e-a577-91df485bc32f.png)
+
+Les nœuds 951 et 64 ont bien remarqué que leur voisin, le nœud 984 est mort :cry:
+
+# Difficultés rencontrées
+
+L'une des difficultés principales du projet était de faire le routage sans utiliser la liste complète des nœuds mais uniquement en prenant un nœud aléatoirement et en faisant la route à partir de celui-ci.
+
+La prise en compte de la dynamicité était aussi complexe. En effet, les mises à jour des données lors de l'ajout ou de la suppression de nœuds étaient compliqués. Il fallait aussi gérer la mise à jour des tables de routage.

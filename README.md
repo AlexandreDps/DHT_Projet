@@ -88,10 +88,16 @@ Voici le résultat affiché lorsque le nœud 984 crash :
 
 ![image](https://user-images.githubusercontent.com/93133836/228972990-a095e575-a5e7-421e-a577-91df485bc32f.png)
 
-Les nœuds 951 et 64 ont bien remarqué que leur voisin, le nœud 984 est mort :cry:
+Les nœuds 951 et 64 ont bien remarqué que leur voisin, le nœud 984 est mort :biblethump:
 
 # Difficultés rencontrées
 
-L'une des difficultés principales du projet était de faire le routage sans utiliser la liste complète des nœuds mais uniquement en prenant un nœud aléatoirement et en faisant la route à partir de celui-ci.
+L'une des difficultés du projet était de faire le routage sans utiliser la liste complète des nœuds mais uniquement en prenant un nœud aléatoirement et en faisant la route à partir de celui-ci. Dans tout notre code, nous avons fait tous les routages sans jamais utiliser la liste complète des noeuds.
 
-La prise en compte de la dynamicité était aussi complexe. En effet, les mises à jour des données lors de l'ajout ou de la suppression de nœuds étaient compliqués. Il fallait aussi gérer la mise à jour des tables de routage.
+La difficulté principale était plutot dans prise en compte de la dynamicité. 
+En effet, les mises à jour des données lors de l'ajout ou de la suppression de nœuds étaient compliqués et nous n'avons pas eu le temps de traiter tous les cas mais voici nos observations :
+- Il faut que les données stockées dans un noeud mort soient transmises à un voisin. 
+- Lorsqu'un noeud rejoins la dht, il faut mettre à jour les données car elles pourraient mieux correspondre au nouveau noeud (si son identifiant est plus proche),
+  dans ce cas, il faut aussi actualiser les voisins qui n'ont plus forcément besoin de répliquer une donnée.
+- Si un noeud meurt ou quitte la dht, il faut mettre à jour les tables de routages (Pour éviter qu'un noeud essaie de faire un lien long vers un noeud qui n'existe plus. (On pourrait ajouter une vérification 'if is_alive' pour éviter d'éventuelles erreurs de ce coté (si un noeud meurt en meme temps qu'un lien long est tenté))
+

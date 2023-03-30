@@ -16,10 +16,16 @@ Tout d’abord, nous avons créés une classe Node pour construire des nœuds av
 
 Voici un exemple de DHT construite :
 
-![image](https://user-images.githubusercontent.com/93133836/228895817-72ad913e-856e-4bea-8408-42fc1f9b6b89.png)
+![image](https://user-images.githubusercontent.com/93133836/228903789-35caf1f9-328e-4d69-8fad-517f948b9030.png)
 
-Ensuite, lorsque l'on supprime un nœud, on obtient la DHT suivante :
+Ensuite, lorsque l'on ajoute un nœud, on obtient la DHT suivante :
 
-![image](https://user-images.githubusercontent.com/93133836/228896123-f5d90219-ad3b-492a-b782-0f6bf3654fa8.png)
+![Figure 2023-03-30 180239](https://user-images.githubusercontent.com/93133836/228904148-9196ba81-8ad9-4476-ae0d-ed12e18a7321.png)
 
-On voit que c'est le nœud 542 qui a quitté la plateforme (il n'est plus présent en bas à droite de l'anneau) et que ses anciens voisins ont bien été mis en relation.
+On voit que le nœud avec l'identifiant 393 a été ajouté et qu'il est bien placé au bon endroit selon la valeur de son identifiant.
+
+Enfin, lorsque l'on supprime un nœud, on obtient la DHT suivante :
+
+![Figure 2023-03-30 183630](https://user-images.githubusercontent.com/93133836/228905066-9d23cde3-8737-4c3a-91c3-97e46806b752.png)
+
+On voit que c'est le nœud 534 qui a quitté la plateforme (cercle rouge) et que ses anciens voisins ont bien été mis en relation.

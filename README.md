@@ -9,10 +9,10 @@ Le but de ce projet est de réaliser et implémenter une DHT.
 
 Développé en python avec Spyder :
 
-Pour lancer la simulation, il suffit d'executer le fichier simulation.py. Nos evenements suivent des loi exponentielles dont vous pouvez modifier les paramètres lambda. Vous pouvez aussi changer la durée de la simulation qui run pendant 20secondes dans notre code. Tous les logs sont print dans la console.
-A la fin de la simulation, vous pourrez voir apparaitre le graphique de la dht résultante.
+Pour lancer la simulation, il suffit d'exécuter le fichier _simulation.py_. Nos événements suivent des lois exponentielles dont vous pouvez modifier les paramètres lambda. Vous pouvez aussi changer la durée de la simulation qui run pendant 20 secondes dans notre code. Tous les logs sont print dans la console.
+À la fin de la simulation, vous pourrez voir apparaître le graphique de la DHT résultante.
 
-Le fichier _graphic.py_ contient le code permettant de traçer l'anneau représentant la DHT (que nous avons construit grace aux coordonnées polaires, 2pi/nombre de noeuds)
+Le fichier _graphic.py_ contient le code permettant de traçer l'anneau représentant la DHT (que nous avons construit grâce aux coordonnées polaires, $2\pi \over nbNoeuds$)
 
 # Construction de la DHT
 
@@ -100,8 +100,8 @@ L'une des difficultés du projet était de faire le routage sans utiliser la lis
 
 La difficulté principale était plutot dans prise en compte de la dynamicité. 
 En effet, les mises à jour des données lors de l'ajout ou de la suppression de nœuds étaient compliqués et nous n'avons pas eu le temps de traiter tous les cas mais voici nos observations :
-- Il faut que les données stockées dans un noeud mort soient transmises à un voisin. 
-- Lorsqu'un noeud rejoins la dht, il faut mettre à jour les données car elles pourraient mieux correspondre au nouveau noeud (si son identifiant est plus proche),
+- Il faut que les données stockées dans un nœud mort soient transmises à un voisin. 
+- Lorsqu'un nœud rejoint la DHT, il faut mettre à jour les données car elles pourraient mieux correspondre au nouveau nœud (si son identifiant est plus proche),
   dans ce cas, il faut aussi actualiser les voisins qui n'ont plus forcément besoin de répliquer une donnée.
-- Si un noeud meurt ou quitte la dht, il faut mettre à jour les tables de routages (Pour éviter qu'un noeud essaie de faire un lien long vers un noeud qui n'existe plus. (On pourrait ajouter une vérification 'if is_alive' pour éviter d'éventuelles erreurs de ce coté (si un noeud meurt en meme temps qu'un lien long est tenté))
+- Si un nœud meurt ou quitte la DHT, il faut mettre à jour les tables de routages (Pour éviter qu'un nœud essaie de faire un lien long vers un nœud qui n'existe plus. On pourrait ajouter une vérification <code>if is_alive</code> pour éviter d'éventuelles erreurs de ce coté (si un nœud meurt en meme temps qu'un lien long est tenté))
 

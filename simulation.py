@@ -10,12 +10,13 @@ import dht
 import simpy.rt
 import graphic
 import time
+from matplotlib import pyplot as plt
 
 #Paramètres représentant le nombre moyen d'occurences par unité de temps (loi exponentielle)
 TEMPS_SIMULATION = 20 #secondes
 MOYENNE_JOIN = 0.6
 MOYENNE_LEAVE = 0.2
-MOYENNE_MESSAGE = 0.2
+MOYENNE_MESSAGE = 0.25
 MOYENNE_DATA = 0.3
 MOYENNE_MORT = 0.3
 
@@ -28,7 +29,7 @@ class Simulation:
         while True:
             yield self.env.timeout(random.expovariate(MOYENNE_JOIN))
             self.dht.add_node()
-    
+            self.dht.add_fig()
     def leave(self):
         while True:
             yield self.env.timeout(random.expovariate(MOYENNE_LEAVE))
@@ -36,6 +37,7 @@ class Simulation:
             if len(self.dht.nodes) >5 : 
                 node_to_remove = random.choice(list(self.dht.nodes.keys()))
                 self.dht.remove_node(node_to_remove)
+                self.dht.add_fig()
                 
     def send_message(self):
         while True:
@@ -71,4 +73,8 @@ simulation.run(TEMPS_SIMULATION)
 time.sleep(5) #Temps nécessaire pour que les noeuds enlevent les derniers morts
 #Graphique finale de la dht
 print("[FIN DE LA SIMULATION] Affichage de la dht finale")
-graphic.show_graph(list(simulation.dht.nodes.keys())[0],len(simulation.dht.nodes))
+final = plt.figure()
+simulation.dht.figures.append(graphic.show_graph(list(simulation.dht.nodes.keys())[0],len(simulation.dht.nodes)))
+
+for fig in simulation.dht.figures:
+    fig.show()

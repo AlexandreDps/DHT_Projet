@@ -13,7 +13,7 @@ from threading import Thread
 import time
 from matplotlib import pyplot as plt
 
-DEGRE_REPLICATION = 3
+DEGRE_REPLICATION = 1
 TIMING_CHECK_IF_ALIVE = 5 #secondes
 RUN_WITH_THREAD = True #Active ou désactive le check alive
 
@@ -32,8 +32,11 @@ class Node():
             node_thread.start()
     def set_v_gauche(self,node):
         self.v_gauche = node
+        self.table_routage[node] = node.identifiant
     def set_v_droite(self,node):
         self.v_droite = node
+        self.table_routage[node] = node.identifiant
+        
     def new_message(self,destinataire,contenu):
         path={}
         path[self]=self.identifiant
@@ -81,9 +84,11 @@ class Node():
             if self.v_droite.is_alive == False :
                 print(f'[*] {self.identifiant} à remarqué que son voisin {self.v_droite.identifiant} était mort. Il fera le necessaire.\n')
                 self.set_v_droite(self.v_droite.v_droite)
+                self.v_droite.set_v_gauche(self)
             if self.v_gauche.is_alive == False :
                 print(f'[*] {self.identifiant} pleure déjà la perte de son camarade {self.v_gauche.identifiant}.\n')
                 self.set_v_gauche(self.v_gauche.v_gauche)
+                self.v_gauche.set_v_droite(self)
         
 class Message():
     def __init__(self,**kwargs):
@@ -109,7 +114,7 @@ class Data():
         while abs(self.identifiant - next_node(sens,compared_node).identifiant) < abs(self.identifiant-compared_node.identifiant):
             compared_node = next_node(sens,compared_node)
         compared_node.get_data(self)
-        print(f"[+] La donnée {self.identifiant} à été transmise au noeud {compared_node.identifiant} et ses {DEGRE_REPLICATION} voisins de droite et gauche les plus proches")
+        print(f"[+] La donnée {self.identifiant} à été transmise au noeud {compared_node.identifiant} et ses voisins de droite et gauche les plus proches")
     
     
     
@@ -118,7 +123,7 @@ class DHT():
         #Initialisation de la DHT avec un seul noeud
         N0 = Node()
         self.nodes = {N0:N0.identifiant}
-            
+        self.figures = []
     def add_node(self):
         new_node = Node()
         EXTREMUM = False
@@ -158,6 +163,11 @@ class DHT():
         node.v_droite.set_v_gauche(node.v_gauche)
         print(f'[-] Le noeud {node.identifiant} a quitté la DHT.')
         del self.nodes[node]
+    
+    def add_fig(self):
+        fig2 = plt.figure()
+        graphic.show_graph(list(self.nodes.keys())[0],len(self.nodes))
+        self.figures.append(fig2)
         
     def die(self,node):
         node.is_alive = False

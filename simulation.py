@@ -60,6 +60,7 @@ class Simulation:
         
     def run(self, runtime):
         self.env.process(self.join())
+        self.env.process(self.join())
         self.env.process(self.leave())
         self.env.process(self.send_message())
         self.env.process(self.add_data())

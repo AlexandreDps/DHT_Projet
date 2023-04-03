@@ -124,7 +124,12 @@ class DHT():
         N0 = Node()
         self.nodes = {N0:N0.identifiant}
         self.figures = []
+        self.node_joining = False
     def add_node(self):
+        while self.node_joining:
+            pass
+        
+        self.node_joining = True
         new_node = Node()
         EXTREMUM = False
         #Check si l'identifiant du noeud existe déjà
@@ -157,7 +162,7 @@ class DHT():
                 
         self.nodes[new_node]=new_node.identifiant
         print(f'[+] Le noeud {new_node.identifiant} a rejoins la DHT.')
-        
+        self.node_joining = False
     def remove_node(self,node):
         node.v_gauche.set_v_droite(node.v_droite)
         node.v_droite.set_v_gauche(node.v_gauche)
